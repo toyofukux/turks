@@ -2,7 +2,7 @@ require 'yaml'
 
 module Turks
   class MixiUser
-    USER_YAML = 'config/user.yaml'
+    USER_YAML = 'config/user.yml'
     attr_reader :email
     attr_reader :password
     def initialize
