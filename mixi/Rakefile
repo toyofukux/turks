@@ -1,6 +1,7 @@
 require 'active_record'
 require 'yaml'
 require 'logger'
+require './db/seeds'
 
 namespace :db do
   MIGRATIONS_DIR = 'db/migrate'
@@ -18,6 +19,11 @@ namespace :db do
   desc 'Roll back the databse schema to the previous version'
   task :rollback do
     ActiveRecord::Migrator.rollback(MIGRATIONS_DIR, ENV["STEP"] ? ENV["STEP"].to_i : 1)
+  end
+
+  desc 'insert test data'
+  task :seed do
+    Turks::LoadSeed.load
   end
 end
 
