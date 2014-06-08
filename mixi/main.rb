@@ -3,6 +3,8 @@ require './auth'
 require './user'
 require './db/datasource'
 require './model/sequence'
+require './file_attach'
+require './image_select'
 
 COMMUNITY_ID = 6202896
 
@@ -26,14 +28,14 @@ end
 auth.mecha.get("http://mixi.jp/view_bbs.pl?comm_id=#{COMMUNITY_ID}&id=#{seq.topics}")
 
 # check max comment
-
 # add topics
 
 # post comment
 auth.mecha.page.form_with(name: "bbs_comment_form") { |form|
-  logger.info form
   # TODO:parse comment content from file or db
   form.set_fields(comment: "日本語の投稿テスト")
-  # TODO:attatch image
+  Turks::FileAttatch.attach(form, Turks::ImageSelect.random)
 }.click_button
+
+logger.info "has completed uploading comment."
 
