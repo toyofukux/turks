@@ -7,7 +7,7 @@ module Turks
     def self.connenction
       config = YAML.load_file(DATASOURCE_CONFIG)
       environment = ENV["ENVIRONMENT"] ? ENV["ENVIRONMENT"] : "development"
-      ActiveRecord::BASE.establish_connection(config["db"][environment])
+      ActiveRecord::Base.establish_connection(config["db"][environment])
     end
   end
 end

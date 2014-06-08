@@ -1,8 +1,10 @@
 require 'logger'
 require './auth'
 require './user'
+require './db/datasource'
+require './model/sequence'
 
-TOPICS_ID = 1
+COMMUNITY_ID = 6202896
 
 logger = Logger.new 'logs/authenticate.log'
 logger.level = Logger::INFO
@@ -13,15 +15,25 @@ auth.authenticate(user.email, user.password)
 
 seq = 0
 begin
-  seq = Sequence.select(:topics).where(community: TOPICS_ID)
-  p seq
+  Turks::DataSource.connenction
+  seq = Sequence.where(community: COMMUNITY_ID).first
 rescue => e
   logger.info "cannot find sequence, message=#{e.message}"
   logger.info e.backtrace
 end
 
 # get topics page
+auth.mecha.get("http://mixi.jp/view_bbs.pl?comm_id=#{COMMUNITY_ID}&id=#{seq.topics}")
+
 # check max comment
+
 # add topics
+
 # post comment
+auth.mecha.page.form_with(name: "bbs_comment_form") { |form|
+  logger.info form
+  # TODO:parse comment content from file or db
+  form.set_fields(comment: "日本語の投稿テスト")
+  # TODO:attatch image
+}.click_button
 
