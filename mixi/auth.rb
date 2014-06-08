@@ -11,6 +11,8 @@ module Turks
       @mecha = Mechanize.new { |agent| 
         agent.user_agent_alias = 'Mac Safari'
         agent.follow_meta_refresh = true
+        agent.default_encoding = 'EUC-JP'
+        agent.force_default_encoding = true
       }
     end
     def authenticate(email, password, next_url='/home.pl')
