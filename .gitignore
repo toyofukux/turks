@@ -39,6 +39,6 @@ build/
 /**/*.sqlite3
 
 #mixi
-/mixi/config/user.yaml
+/mixi/config/user.yml
 /mixi/img
 
