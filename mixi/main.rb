@@ -31,11 +31,16 @@ auth.mecha.get("http://mixi.jp/view_bbs.pl?comm_id=#{COMMUNITY_ID}&id=#{seq.topi
 # add topics
 
 # post comment
-auth.mecha.page.form_with(name: "bbs_comment_form") { |form|
-  # TODO:parse comment content from file or db
-  form.set_fields(comment: "日本語の投稿テスト")
-  Turks::FileAttatch.attach(form, Turks::ImageSelect.random)
-}.click_button
+begin
+  auth.mecha.page.form_with(name: "bbs_comment_form") { |form|
+    # TODO:parse comment content from file or db
+    form.set_fields(comment: "日本語の投稿テスト")
+    Turks::FileAttatch.attach(form, Turks::ImageSelect.random)
+  }.click_button
+rescue
+  logger.info auth.mecha.page
+  fail
+end
 
 logger.info "has completed uploading comment."
 

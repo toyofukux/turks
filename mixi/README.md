@@ -7,6 +7,7 @@ must be _.jpeg_ not _.jpg_
 
 ## initialize
 ```ruby
+$ sudo yum install sqlite-devel
 $ bundle install
 $ bundle exec rake db:migrate
 $ vim config/user.yml
