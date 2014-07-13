@@ -42,3 +42,6 @@ build/
 /mixi/config/user.yml
 /mixi/img
 
+#tw_bot
+/tw_bot/config/token.yml
+
