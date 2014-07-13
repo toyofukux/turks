@@ -7,7 +7,12 @@ class Turks
     attr_reader :streaming_client
     def initialize
       token = YAML.load_file TOKEN_YML
-      #@rest_client = Twitter::Streaming
+      @rest_client = Twitter::REST::Client.new do |config|
+        config.consumer_key = token["twitter"]["consumer_key"]
+        config.consumer_secret = token["twitter"]["consumer_secret"]
+        config.access_token = token["twitter"]["access_token"]
+        config.access_token_secret = token["twitter"]["access_token_secret"]
+      end
       @streaming_client = Twitter::Streaming::Client.new do |config|
         config.consumer_key = token["twitter"]["consumer_key"]
         config.consumer_secret = token["twitter"]["consumer_secret"]
