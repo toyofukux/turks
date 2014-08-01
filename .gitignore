@@ -40,7 +40,7 @@ build/
 
 #mixi
 /mixi/config/user.yml
-/mixi/img
+#/mixi/img
 
 #tw_bot
 /tw_bot/config/token.yml
