@@ -6,8 +6,6 @@ require './model/sequence'
 require './file_attach'
 require './image_select'
 
-COMMUNITY_ID = 6202896
-
 logger = Logger.new 'logs/authenticate.log'
 logger.level = Logger::INFO
 
@@ -15,17 +13,19 @@ user = Turks::MixiUser.new
 auth = Turks::MixiAuth.new
 auth.authenticate(user.email, user.password)
 
+current = YAML.load_file "config/current.yml"
+commid = current["mixi"]["commid"]
 seq = 0
 begin
   Turks::DataSource.connenction
-  seq = Sequence.where(community: COMMUNITY_ID).first
+  seq = Sequence.where(community: commid).first
 rescue => e
   logger.info "cannot find sequence, message=#{e.message}"
   logger.info e.backtrace
 end
 
 # get topics page
-auth.mecha.get("http://mixi.jp/view_bbs.pl?comm_id=#{COMMUNITY_ID}&id=#{seq.topics}")
+auth.mecha.get("http://mixi.jp/view_bbs.pl?comm_id=#{commid}&id=#{seq.topics}")
 
 # check max comment
 # add topics
