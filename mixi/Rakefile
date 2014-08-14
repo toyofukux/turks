@@ -9,16 +9,19 @@ require File.expand_path('../lib/topics.rb', __FILE__)
 require File.expand_path('../lib/gmail.rb', __FILE__)
 
 namespace :db do
-  MIGRATIONS_DIR = 'db/migrate'
-  DATASOURCE_CONFIG = 'config/database.yml'
-  config = YAML.load_file(DATASOURCE_CONFIG)
-  environment = ENV["ENVIRONMENT"] ? ENV["ENVIRONMENT"] : "development"
-  ActiveRecord::Base.establish_connection(config["db"][environment])
-  ActiveRecord::Base.logger = Logger.new(STDOUT)
+  MIGRATIONS_DIR = File.expand_path('../db/migrate', __FILE__)
+  DATASOURCE_CONFIG = File.expand_path('../config/database.yml', __FILE__)
 
   desc 'Migrate the database'
-  task :migrate do
+  task :migrate => :environment do
     ActiveRecord::Migrator.migrate(MIGRATIONS_DIR, ENV["VERSION"] ? ENV["VERSION"].to_i : nil)
+  end
+
+  task :environment do
+    dbconfig = YAML.load_file DATASOURCE_CONFIG
+    environment = ENV['ENV'] ? ENV['ENV'] : 'development'
+    ActiveRecord::Base.establish_connection(dbconfig["db"][environment])
+    ActiveRecord::Base.logger = Logger.new(STDOUT)
   end
 
   desc 'Roll back the databse schema to the previous version'
