@@ -4,4 +4,5 @@ gem 'mechanize'
 gem 'activerecord'
 gem 'sqlite3'
 gem 'rake'
+gem 'gmail'
 

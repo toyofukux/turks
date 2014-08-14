@@ -1,8 +1,7 @@
 require 'rubygems'
 require 'active_record'
 require 'yaml'
-require File.expand_path('../../model/sequence', __FILE__)
-require File.expand_path('../../model/topic', __FILE__)
+require File.expand_path('../../lib/model/topic.rb', __FILE__)
 
 module Turks
   class LoadSeed
@@ -18,7 +17,14 @@ module Turks
         description = f.read
       }
       comment = "詳細送ります(=´∀｀)人(´∀｀=)"
-      topic = Topic.where(community_id: commid)
+      topic = Topic.where(community_id: commid, topic_id: topid)
+      if topic.present?
+        puts 'present.'
+      else
+        Topic.create(community_id: commid, topic_id: topid, title: title, description: description, comment: comment)
+      end
+      topid = 76806357
+      topic = Topic.where(community_id: commid, topic_id: topid)
       if topic.present?
         puts 'present.'
       else

@@ -1,10 +1,9 @@
 require 'rubygems'
 require 'mechanize'
 require 'nokogiri'
-require 'logger'
 
 module Turks
-  class MixiAuth
+  class MixiAgent
     MIXI_LOGIN_URL = 'https://mixi.jp/'
     attr_reader :mecha
     def initialize
@@ -33,6 +32,12 @@ module Turks
       @mecha.page.form_with(action: action) { |form|
         form.set_fields(fields)
       }
+    end
+    def search(dom)
+      @mecha.page.search(dom)
+    end
+    def links
+      @mecha.page.links
     end
   end
 end

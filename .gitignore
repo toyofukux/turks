@@ -40,6 +40,7 @@ build/
 
 #mixi
 /mixi/config/user.yml
+/mixi/config/gmail.yml
 /mixi/img
 
 #tw_bot
