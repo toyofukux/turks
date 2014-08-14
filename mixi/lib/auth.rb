@@ -21,6 +21,19 @@ module Turks
         form.set_fields(next_url: next_url, email: email, password: password)
       }.click_button
     end
+    def get(url)
+      @mecha.get(url)
+    end
+    def set_form_by_name(name, fields = {})
+      @mecha.page.form_with(name: name) { |form|
+        form.set_fields(fields)
+      }
+    end
+    def set_form_by_action(action, fields = {})
+      @mecha.page.form_with(action: action) { |form|
+        form.set_fields(fields)
+      }
+    end
   end
 end
 

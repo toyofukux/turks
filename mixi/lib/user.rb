@@ -2,7 +2,7 @@ require 'yaml'
 
 module Turks
   class MixiUser
-    USER_YAML = 'config/user.yml'
+    USER_YAML = File.expand_path('../../config/user.yml', __FILE__)
     attr_reader :email
     attr_reader :password
     def initialize

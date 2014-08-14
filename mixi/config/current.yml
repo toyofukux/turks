@@ -1,3 +1,10 @@
-mixi:
+color:
   commid: 6210694
-  topid: 76786353
+  topid: 123456
+akb:
+  commid: 4533587
+  topid: 75845999
+  #topid: 76608842
+test:
+  commid: 6211127
+  topid: 76806419

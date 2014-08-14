@@ -1,4 +1,4 @@
 require 'rubygems'
 require 'active_record'
-class Sequence < ActiveRecord::Base
+class Topic < ActiveRecord::Base
 end

@@ -23,7 +23,14 @@ namespace :db do
 
   desc 'insert test data'
   task :seed do
+    Turks::LoadSeed.truncate
     Turks::LoadSeed.load
+  end
+end
+
+namespace :mixi do
+  desc 'add topics'
+  task :add_topic do
   end
 end
 

@@ -2,7 +2,7 @@ require 'find'
 
 module Turks
   class ImageSelect
-    DIRECTORY = './img'
+    DIRECTORY = File.expand_path('../../img', __FILE__)
     def self.random
       Find.find(DIRECTORY).to_a.shuffle!.each do |f|
         # TypeError: no implicit conversion of nil into String
