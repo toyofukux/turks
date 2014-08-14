@@ -36,7 +36,7 @@ build/
 /**/logs/*.log
 /*/vendor/bundle
 /*/Gemfile.lock
-/**/*.sqlite3
+/**/db/*.sqlite3
 
 #mixi
 /mixi/config/user.yml
