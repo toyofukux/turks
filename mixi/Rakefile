@@ -30,7 +30,7 @@ namespace :db do
   end
 
   desc 'insert test data'
-  task :seed do
+  task :seed => :environment do
     Turks::LoadSeed.truncate
     Turks::LoadSeed.load
   end
@@ -50,11 +50,15 @@ namespace :mixi do
         cid = top.community_id
         tid = top.topic_id
         agent.get("http://mixi.jp/view_bbs.pl?comm_id=#{cid}&id=#{tid}")
-        Turks::Topics.add(agent, top) if Turks::Comment.max?(agent, cid, tid)
+        alert = agent.search('p.messageAlert')
+        if Turks::Topics.max?(agent, top, tid) || alert.present?
+          Turks::Topics.add(agent, top)
+        end
         Turks::Comment.post(agent, "bbs_comment_form", top.comment)
         logger.info "has completed uploading comment at community_id = #{cid}, topic_id = #{tid}."
       end
     rescue => e
+      logger.info(agent.mecha.page)
       logger.info("cannot post comment. message=#{e.message}")
       logger.info e.backtrace
       Turks::Mail.mail("takaty2011@gmail.com", "error occured", e.backtrace)

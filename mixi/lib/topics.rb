@@ -1,6 +1,5 @@
 require File.expand_path('../agent.rb', __FILE__)
 require File.expand_path('../../db/datasource.rb', __FILE__)
-require File.expand_path('../topics.rb', __FILE__)
 module Turks
   class Topics
     BASEURL_ADD = "http://mixi.jp/add_bbs.pl?id="
@@ -17,6 +16,10 @@ module Turks
     def self.active_topics
       Turks::DataSource.connenction
       Topic.where(is_suspended: "0")
+    end
+    def self.max?(agent, community_id, topic_id)
+      agent.get("http://mixi.jp/view_bbs.pl?comm_id=#{community_id}&id=#{topic_id}")
+      agent.search('div.overLimit').present?
     end
     private
     def new_topic_id(links)
